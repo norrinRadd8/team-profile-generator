@@ -18,19 +18,41 @@ const inquirer = require("inquirer");
 // alice.getName()
 // alice.getId()
 // alice.getEmail()
+function prompts() {
+    inquirer.prompt([
+        {
+            name: "name",
+            message: "What is the team manager's name?",
+            validate: (user_input) => {
+                if(!user_input.length) return 'You must enter at least one character.'
+                return true
+            }
 
-inquirer.prompt([
-    {
-    name: "name",
-    message: "Please enter your name.",
-    validate: (user_input) => {
-        if(!user_input.length) return 'You must enter at least one character.'
-        return true
-    }
+        },
+        {
+            name: "id",
+            message: "What is the team manager's id?"
+        }, 
+        {
+            name: "email",
+            message: "What is the team manager's email?"
+        },
+        {
+            name: "officeNumber",
+            message: "What is the team manager's office number?"
+        },
+        {
+            name: "teamMemberType",
+            message: "Which type of team member would you like to add?",
+            choices: ["Engineer", "Intern", "I don't want to enter any more team members"],
+            type: "list"
+        }
 
-    }
-]) .then(data => {
-    console.log(data)
-})
+    ]) .then(data => {
+        console.log(data)
+    })
 
 
+}
+
+prompts()
