@@ -18,7 +18,7 @@ const inquirer = require("inquirer");
 // alice.getName()
 // alice.getId()
 // alice.getEmail()
-function prompts() {
+function managerPrompts() {
     inquirer.prompt([
         {
             name: "name",
@@ -51,8 +51,61 @@ function prompts() {
     ]) .then(data => {
         console.log(data)
     })
+}
 
+function engineerPrompts() {
+    inquirer.prompt([
+        {
+           name: "name", 
+           message: "What is the engineer's name?",
+           validate: (user_input) => {
+            if(!user_input.length) return 'You must enter at least one character.'
+            return true
+            }
+        },
+        {
+            name: "id",
+            message: "What is the engineer's id?"
+        },
+        {
+            name: "officeNumber",
+            message: "What is the engineer's office number?"
+        },
+        {
+            name: "teamMemberType",
+            message: "Which type of team member would you like to add?",
+            choices: ["Engineer", "Intern", "I don't want to enter any more team members"],
+            type: "list"
+        }
+    ])
+}
+
+function internPrompts() {
+    inquirer.prompt([
+        {
+           name: "name", 
+           message: "What is the intern's name?",
+           validate: (user_input) => {
+            if(!user_input.length) return 'You must enter at least one character.'
+            return true
+            }
+        },
+        {
+            name: "id",
+            message: "What is the intern's id?"
+        },
+        {
+            name: "officeNumber",
+            message: "What is the intern's office number?"
+        },
+        {
+            name: "teamMemberType",
+            message: "Which type of team member would you like to add?",
+            choices: ["Engineer", "Intern", "I don't want to enter any more team members"],
+            type: "list"
+        }
+    ])
 
 }
 
-prompts()
+managerPrompts()
