@@ -10,6 +10,7 @@ const inquirer = require("inquirer");
 
 // const render = require("./src/page-template.js");
 
+const teamData = []
 
 // TODO: Write Code to gather information about the development team members, and render the HTML file.
 
@@ -54,7 +55,9 @@ function managerPrompts() {
             internPrompts()
         } else  {
             answers.teamMemberType === "Exit"
+            teamData.push(answers)
             console.log('Thank you for your update(s). GoodBye!')
+            
             return false
         }
 
@@ -107,7 +110,9 @@ function engineerPrompts() {
             internPrompts()
         } else  {
             answers.teamMemberType === "Exit"
+            teamData.push(answers)
             console.log('Thank you for your update(s). GoodBye!')
+            
             return false
         }
 
@@ -150,7 +155,9 @@ function internPrompts() {
             internPrompts()
         } else  {
             answers.teamMemberType === "Exit"
+            teamData.push(answers)
             console.log('Thank you for your update(s). GoodBye!')
+            
             return false
         }
     })
@@ -158,3 +165,4 @@ function internPrompts() {
 }
 
 managerPrompts()
+console.log(teamData)
