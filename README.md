@@ -27,7 +27,7 @@ npm install
 
 ## Usage
 
-![App demo](assets/images/proReadMeDemo.gif)
+![App demo](assets/images/team-profile-gen.png)
 
 ## Link to video
 
