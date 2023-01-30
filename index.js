@@ -18,6 +18,7 @@ const inquirer = require("inquirer");
 // alice.getName()
 // alice.getId()
 // alice.getEmail()
+
 function managerPrompts() {
     inquirer.prompt([
         {
@@ -27,7 +28,6 @@ function managerPrompts() {
                 if(!user_input.length) return 'You must enter at least one character.'
                 return true
             }
-
         },
         {
             name: "id",
@@ -44,13 +44,25 @@ function managerPrompts() {
         {
             name: "teamMemberType",
             message: "Which type of team member would you like to add?",
-            choices: ["Engineer", "Intern", "I don't want to enter any more team members"],
+            choices: ["Engineer", "Intern", "Exit"],
             type: "list"
         }
+    ]) .then((answers) => {
+        if(answers.teamMemberType === "Engineer") {
+            engineerPrompts()
+        } else if(answers.teamMemberType === "Intern") {
+            internPrompts()
+        } else  {
+            answers.teamMemberType === "Exit"
+            console.log('Thank you for your update(s). GoodBye!')
+            return false
+        }
 
-    ]) .then(data => {
-        console.log(data)
     })
+
+    // ]) .then(data => {
+    //     console.log(data)
+    // })
 }
 
 function engineerPrompts() {
@@ -68,16 +80,39 @@ function engineerPrompts() {
             message: "What is the engineer's id?"
         },
         {
-            name: "officeNumber",
-            message: "What is the engineer's office number?"
+            name: "email",
+            message: "What is the engineer's email?"
+
+        },
+        {
+            name: "gitHub",
+            message: "What is the engineer's GitHub username?"
+        },
+        { 
+            name: "teamMemberType",
+            message: "Which type of team member would you like to add?",
+            choices: ["Engineer", "Intern", "No more team members, please exit prompts"],
+            type: "list"
         },
         {
             name: "teamMemberType",
             message: "Which type of team member would you like to add?",
-            choices: ["Engineer", "Intern", "I don't want to enter any more team members"],
+            choices: ["Engineer", "Intern", "Exit"],
             type: "list"
+        },
+    ]) .then((answers) => {
+        if(answers.teamMemberType === "Engineer") {
+            engineerPrompts()
+        } else if(answers.teamMemberType === "Intern") {
+            internPrompts()
+        } else  {
+            answers.teamMemberType === "Exit"
+            console.log('Thank you for your update(s). GoodBye!')
+            return false
         }
-    ])
+
+    })
+    
 }
 
 function internPrompts() {
@@ -95,16 +130,30 @@ function internPrompts() {
             message: "What is the intern's id?"
         },
         {
-            name: "officeNumber",
-            message: "What is the intern's office number?"
+            name: "email",
+            message: "What is the intern's email?"
+        },
+        {
+            name: "school",
+            message: "What is the intern's school?"
         },
         {
             name: "teamMemberType",
             message: "Which type of team member would you like to add?",
-            choices: ["Engineer", "Intern", "I don't want to enter any more team members"],
+            choices: ["Engineer", "Intern", "Exit"],
             type: "list"
+        },
+    ]) .then((answers) => {
+        if(answers.teamMemberType === "Engineer") {
+            engineerPrompts()
+        } else if(answers.teamMemberType === "Intern") {
+            internPrompts()
+        } else  {
+            answers.teamMemberType === "Exit"
+            console.log('Thank you for your update(s). GoodBye!')
+            return false
         }
-    ])
+    })
 
 }
 
