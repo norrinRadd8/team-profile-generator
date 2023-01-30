@@ -21,7 +21,7 @@ const teamData = []
 // alice.getEmail()
 
 function managerPrompts() {
-    inquirer.prompt([
+   return inquirer.prompt([
         {
             name: "name",
             message: "What is the team manager's name?",
@@ -41,35 +41,18 @@ function managerPrompts() {
         {
             name: "officeNumber",
             message: "What is the team manager's office number?"
-        },
-        {
-            name: "teamMemberType",
-            message: "Which type of team member would you like to add?",
-            choices: ["Engineer", "Intern", "Exit"],
-            type: "list"
         }
     ]) .then((answers) => {
-        if(answers.teamMemberType === "Engineer") {
-            engineerPrompts()
-        } else if(answers.teamMemberType === "Intern") {
-            internPrompts()
-        } else  {
-            answers.teamMemberType === "Exit"
-            teamData.push(answers)
-            console.log('Thank you for your update(s). GoodBye!')
-            
-            return false
-        }
+        teamData.push({
+            type: 'manager',
+            data: answers
+        })
 
     })
-
-    // ]) .then(data => {
-    //     console.log(data)
-    // })
 }
 
 function engineerPrompts() {
-    inquirer.prompt([
+    return inquirer.prompt([
         {
            name: "name", 
            message: "What is the engineer's name?",
@@ -91,37 +74,17 @@ function engineerPrompts() {
             name: "gitHub",
             message: "What is the engineer's GitHub username?"
         },
-        { 
-            name: "teamMemberType",
-            message: "Which type of team member would you like to add?",
-            choices: ["Engineer", "Intern", "No more team members, please exit prompts"],
-            type: "list"
-        },
-        {
-            name: "teamMemberType",
-            message: "Which type of team member would you like to add?",
-            choices: ["Engineer", "Intern", "Exit"],
-            type: "list"
-        },
     ]) .then((answers) => {
-        if(answers.teamMemberType === "Engineer") {
-            engineerPrompts()
-        } else if(answers.teamMemberType === "Intern") {
-            internPrompts()
-        } else  {
-            answers.teamMemberType === "Exit"
-            teamData.push(answers)
-            console.log('Thank you for your update(s). GoodBye!')
-            
-            return false
-        }
-
+        teamData.push({
+            type: 'engineer',
+            data: answers
+        })
     })
     
 }
 
 function internPrompts() {
-    inquirer.prompt([
+     return inquirer.prompt([
         {
            name: "name", 
            message: "What is the intern's name?",
@@ -142,27 +105,44 @@ function internPrompts() {
             name: "school",
             message: "What is the intern's school?"
         },
+        
+    ]) .then((answers) => {
+        teamData.push({
+            type: 'intern',
+            data: answers
+        })
+    }) 
+
+}
+
+function prompts() {
+    return inquirer.prompt([
         {
             name: "teamMemberType",
             message: "Which type of team member would you like to add?",
             choices: ["Engineer", "Intern", "Exit"],
             type: "list"
         },
-    ]) .then((answers) => {
+    ]).then(answers => {
         if(answers.teamMemberType === "Engineer") {
-            engineerPrompts()
-        } else if(answers.teamMemberType === "Intern") {
-            internPrompts()
-        } else  {
-            answers.teamMemberType === "Exit"
-            teamData.push(answers)
-            console.log('Thank you for your update(s). GoodBye!')
-            
-            return false
+            return engineerPrompts()
+                .then(prompts)
         }
+        else if(answers.teamMemberType === "Intern") {
+            return internPrompts()
+                .then(prompts)
+        }
+        console.log('Thank you for your update(s). Goodbye!')
+        console.log(teamData)
+        process.exit()
     })
-
 }
 
-managerPrompts()
-console.log(teamData)
+function init() {
+    console.log('----- Welcome to the Team Profile Generator -----')
+    managerPrompts()
+    .then(prompts)
+    
+}
+init()
+
