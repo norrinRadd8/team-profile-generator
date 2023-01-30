@@ -2,23 +2,18 @@ const Manager = require("./lib/Manager");
 const Engineer = require("./lib/Engineer");
 const Intern = require("./lib/Intern");
 const inquirer = require("inquirer");
-// const path = require("path");
-// const fs = require("fs");
+const path = require("path");
+const fs = require("fs");
 
-// const OUTPUT_DIR = path.resolve(__dirname, "output");
-// const outputPath = path.join(OUTPUT_DIR, "team.html");
+const OUTPUT_DIR = path.resolve(__dirname, "output");
+const outputPath = path.join(OUTPUT_DIR, "team.html");
 
-// const render = require("./src/page-template.js");
+const render = require("./src/page-template.js");
+const { type } = require("os");
 
 const teamData = []
 
 // TODO: Write Code to gather information about the development team members, and render the HTML file.
-
-// const alice = new Manager('Alice', '1', 'test@test.com')
-
-// alice.getName()
-// alice.getId()
-// alice.getEmail()
 
 function managerPrompts() {
    return inquirer.prompt([
@@ -28,25 +23,29 @@ function managerPrompts() {
             validate: (user_input) => {
                 if(!user_input.length) return 'You must enter at least one character.'
                 return true
-            }
+                
+            },
+            type: "input"
         },
         {
             name: "id",
-            message: "What is the team manager's id?"
+            message: "What is the team manager's id?",
+            type:"input"
         }, 
         {
             name: "email",
-            message: "What is the team manager's email?"
+            message: "What is the team manager's email?",
+            type:"input"
         },
         {
             name: "officeNumber",
-            message: "What is the team manager's office number?"
+            message: "What is the team manager's office number?",
+            type:"input"
         }
-    ]) .then((answers) => {
-        teamData.push({
-            type: 'manager',
-            data: answers
-        })
+    ]) .then((answers) => { 
+        teamData.push(
+            new Manager(answers.name, answers.id, answers.email, answers.officeNumber)
+            )
 
     })
 }
@@ -59,26 +58,29 @@ function engineerPrompts() {
            validate: (user_input) => {
             if(!user_input.length) return 'You must enter at least one character.'
             return true
-            }
+            },
+            type: "input"
         },
         {
             name: "id",
-            message: "What is the engineer's id?"
+            message: "What is the engineer's id?",
+            type: "input"
         },
         {
             name: "email",
-            message: "What is the engineer's email?"
+            message: "What is the engineer's email?",
+            type: "input"
 
         },
         {
             name: "gitHub",
-            message: "What is the engineer's GitHub username?"
+            message: "What is the engineer's GitHub username?",
+            type: "input"
         },
     ]) .then((answers) => {
-        teamData.push({
-            type: 'engineer',
-            data: answers
-        })
+        teamData.push(
+            new Engineer(answers.name, answers.id, answers.email, answers.gitHub)
+            )
     })
     
 }
@@ -91,26 +93,29 @@ function internPrompts() {
            validate: (user_input) => {
             if(!user_input.length) return 'You must enter at least one character.'
             return true
-            }
+            },
+            type: "input"
         },
         {
             name: "id",
-            message: "What is the intern's id?"
+            message: "What is the intern's id?",
+            type: "input"
         },
         {
             name: "email",
-            message: "What is the intern's email?"
+            message: "What is the intern's email?",
+            type: "input"
         },
         {
             name: "school",
-            message: "What is the intern's school?"
+            message: "What is the intern's school?",
+            type: "input"
         },
         
     ]) .then((answers) => {
-        teamData.push({
-            type: 'intern',
-            data: answers
-        })
+        teamData.push(
+            new Intern(answers.name, answers.id, answers.email, answers.school)
+            )
     }) 
 
 }
@@ -132,10 +137,17 @@ function prompts() {
             return internPrompts()
                 .then(prompts)
         }
-        console.log('Thank you for your update(s). Goodbye!')
+        console.log('Thank you for your update(s). Your page has been created. Goodbye!')
         console.log(teamData)
+        buildPage()
         process.exit()
+        
+        
     })
+}
+
+function buildPage() {
+    fs.writeFileSync(outputPath, render(teamData), "utf-8")
 }
 
 function init() {
