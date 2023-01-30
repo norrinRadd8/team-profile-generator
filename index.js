@@ -139,7 +139,7 @@ function prompts() {
 }
 
 function init() {
-    console.log('----- Welcome to the Team Profile Generator -----')
+    console.log('\n----- Welcome to the Team Profile Generator -----\n')
     managerPrompts()
     .then(prompts)
     
