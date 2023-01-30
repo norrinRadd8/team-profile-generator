@@ -1,5 +1,5 @@
 body {
-    background-color: black;
+    background-color: black !important;
 }
 .card {
     background-color: transparent !important;
@@ -7,16 +7,16 @@ body {
     
 }
 .card-title {
-    color: darkgray;
+    color: darkgray !important;
 }
 .list-group-item  {
     background-color: transparent !important;
-    border-bottom-color: currentColor; 
-    color: darkgray;
+    border-bottom-color: currentColor !important; 
+    color: darkgray !important;
 }
 .jumbotron {
     background-color: transparent !important;
 }
 .text-center {
-    color: #28a745;
+    color: #28a745 !important;
 }
