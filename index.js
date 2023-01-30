@@ -137,8 +137,9 @@ function prompts() {
             return internPrompts()
                 .then(prompts)
         }
-        console.log('Thank you for your update(s). Your page has been created. Goodbye!')
+        console.log('This is you team data teamData')
         console.log(teamData)
+        console.log('Thank you for your update(s). Your page has now been rendered to the output directory. \n Goodbye!')
         buildPage()
         process.exit()
         
