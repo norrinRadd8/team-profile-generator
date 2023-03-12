@@ -1,8 +1,14 @@
-/** SOME STYLING CSS, OVERWRITING STANDARD BOOTSRAP **/
+* SOME STYLING CSS, OVERWRITING STANDARD BOOTSRAP *
 
 body {
     background-color: black !important;
 }
+
+.row {
+    display: grid !important;
+    justify-content: center !important;
+}
+
 .card {
     background-color: transparent !important;
     border: 1px solid #28a745 !important;
@@ -22,3 +28,12 @@ body {
 .text-center {
     color: #28a745 !important;
 }
+
+@media (min-width: 750px) {
+  
+  
+    .team-area.d-flex {
+      display: none;
+    }
+  }
+  
